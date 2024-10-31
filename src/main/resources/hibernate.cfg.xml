@@ -22,5 +22,8 @@
         <!--   Mapping entity file →-->
         <mapping class="com.NorstarPhoenix.model.Department"/>
         <mapping class="com.NorstarPhoenix.model.Teacher"/>
+        <mapping class="com.NorstarPhoenix.model.Address"/>
+        <mapping class="com.NorstarPhoenix.model.Person"/>
+        <mapping class="com.NorstarPhoenix.model.Cohort"/>
     </session-factory>
  </hibernate-configuration>

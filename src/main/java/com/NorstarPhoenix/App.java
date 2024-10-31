@@ -1,6 +1,8 @@
 package com.NorstarPhoenix;
 
+import com.NorstarPhoenix.model.Address;
 import com.NorstarPhoenix.model.Department;
+import com.NorstarPhoenix.model.Person;
 import com.NorstarPhoenix.model.Teacher;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -11,13 +13,29 @@ import java.util.List;
 public class App {
     public static void main(String[] args) {
 
-        oneToMany();
+        //oneToMany();
+        oneToOne();
     }
 
     public static void manyToOne(){
         SessionFactory factory = new Configuration().configure().buildSessionFactory();
         Session session = factory.openSession();
         Transaction transaction = session.beginTransaction();
+
+        // Creating Address
+        Address address1 = new Address("123 Main St", "NYC", "NY", 10001);
+        Address address2 = new Address("456 Elm St", "Buffalo", "NY", 14201);
+
+        // Creating Person and setting Address
+        Person person1 = new Person("Alice", address1);
+        Person person2 = new Person("Bob", address2);
+
+        // Persisting Person and Address
+        session.persist(person1);
+        session.persist(person2);
+
+        transaction.commit();
+        session.close();
 
         //creating departments
         Department dept1 = new Department("IT");
@@ -38,6 +56,7 @@ public class App {
         session.persist(t3);
         session.persist(t4);
         transaction.commit();  }
+
 
     public static void oneToMany(){
         SessionFactory factory = new Configuration().configure().buildSessionFactory();
@@ -69,6 +88,33 @@ public class App {
         //Storing Department
         session.persist(department);
         t.commit();    }
+
+
+    public static void oneToOne(){
+        System.out.println("Maven + Hibernate + SQL One to One Mapping Annotations");
+
+        SessionFactory factory = new Configuration().configure().buildSessionFactory();
+        Session session = factory.openSession();
+
+        Transaction t = session.beginTransaction();
+        Address a1 = new Address("27th street","NYC","NY",11103);
+        Address a2 = new Address("28th street","Buffalo","NY",15803);
+
+        Teacher t1 = new Teacher("1000","MHaseeb");
+        Teacher t2 = new Teacher("2220","Shahparan");
+        t1.setAddress(a1);
+        t2.setAddress(a2);
+
+
+
+        session.persist(a1);
+        session.persist(a2);
+        session.persist(t1);
+        session.persist(t2);
+
+        t.commit();
+    }
+
 
 
 }
